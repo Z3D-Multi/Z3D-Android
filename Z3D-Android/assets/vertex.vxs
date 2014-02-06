@@ -1,0 +1,11 @@
+attribute vec3 position;
+varying vec4 posInfo;
+uniform mat4 transform;
+void main()
+{
+		
+	posInfo = clamp(transform*vec4(position.xy,1.0,length(position)),0.0,1.0);
+	gl_Position = gl_ModelViewProjectionMatrix * transform*vec4(position,1.0);
+
+}
+

@@ -1,0 +1,27 @@
+Order of calls made during each gesture-
+
+single tap-
+onDown,onSingleTapUp,onSingleTapConfirmed
+
+doubletap-
+onDown,onSingleTapUp,onDoubleTap,onDoubleTapEvent,onDown,onDoubleTapEvent
+
+while moving-
+onDown,onScroll......onScroll
+
+pressing-
+onDown,onShowPress,onLongPress
+
+flinging-
+onScroll.....onFling
+
+
+Notes on how to implement:-
+In the onDown event callback, i set state as SINGLE_TAP. Then, i reset state to NONE onSingleTapConfirmed. 
+If, instead, an onDoubleTap is received, state is set to DOUBLE_TAP, and reset to NONE onDoubleTapEvent.
+
+In the next 3 gestures, we've got a bit of a problem. We dont know when they end, as we dont get a callback when the user finishes that gesture.
+
+To remedy this, the plan is to set up a callback onTouchEvent itself, and whenever it received the masked action ACTION_UP, it checks whether the state is one of these 3 (i.e. MOVE,PRESS or FLING) and if it is, then it resets state to NONE.
+
+After this, it is simple. The state MOVE is set when the onScroll callback is issued. The state PRESS is set when the onShowPress callback is issued, and the state FLING is set when the onFling callback is issued.

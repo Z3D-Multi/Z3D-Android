@@ -1,0 +1,7 @@
+#version 330
+varying vec4 posInfo;
+uniform vec4 vColor;
+void main()
+{
+	gl_FragColor = posInfo;
+}
