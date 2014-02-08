@@ -74,41 +74,40 @@ public class Shader
 		}
 		
 	}
-	public void setUniform(String uniformName,int value)
+	public void setUniform(String uniformName,int value) throws Exception
 	{
 		GLES20.glUniform1i(uniformMap.get(uniformName).intValue(),value);
+		Error.checkGLError();
 	}
-	public void setUniform(String uniformName,Vector4f value)
+	public void setUniform(String uniformName,Vector4f value) throws Exception
 	{
 		GLES20.glUniform4fv(uniformMap.get(uniformName).intValue(),1,
 				new float[]{value.getX(),value.getY(),value.getZ(),value.getW()},0);
+		Error.checkGLError();
 	}
-	public void setUniform(String uniformName,float value)
+	public void setUniform(String uniformName,float value) throws Exception
 	{
 		GLES20.glUniform1f(uniformMap.get(uniformName).intValue(),value);
+		Error.checkGLError();
 	}
-	public void setUniform(String uniformName,Vector3f value)
+	public void setUniform(String uniformName,Vector3f value) throws Exception
 	{
 		GLES20.glUniform3f(uniformMap.get(uniformName).intValue(),value.getX(),value.getY()
 				,value.getZ());
+		Error.checkGLError();
 	}
 	public void setUniform(String uniformName,Matrix4f value) throws Exception
 	{
 		int n=uniformMap.get(uniformName).intValue();
 		float[] matrix=Util.createFlippedBuffer(value);
 		GLES20.glUniformMatrix4fv(n,1,false,matrix,0);
-		
-		int errCode=GLES20.glGetError();
-		if(errCode!=GLES20.GL_NO_ERROR)
-		{
-			String err=GLU.gluErrorString(errCode);
-			throw new Exception("OpenGL error: "+err);
-		}
+		Error.checkGLError();
 	}
-	public void setUniform(String uniformName, float[] mvpMatrix) 
+	public void setUniform(String uniformName, float[] mvpMatrix) throws Exception 
 	{
 		int n=uniformMap.get(uniformName).intValue();
 		GLES20.glUniformMatrix4fv(n, 1,false,mvpMatrix,0);
+		Error.checkGLError();
 	}
 	
 }
