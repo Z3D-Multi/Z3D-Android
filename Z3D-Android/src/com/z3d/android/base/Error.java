@@ -30,4 +30,13 @@ public class Error
 	{
 		Log.d("OpenGL Error: ",GLU.gluErrorString(GLES20.glGetError()));
 	}
+	public static void checkGLError() throws Exception
+	{
+		int errCode=GLES20.glGetError();
+		if(errCode!=GLES20.GL_NO_ERROR)
+		{
+			String err=GLU.gluErrorString(errCode);
+			throw new Exception("OpenGL error: "+err);
+		}	
+	}
 }
