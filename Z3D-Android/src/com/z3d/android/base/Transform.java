@@ -15,7 +15,7 @@ public class Transform
 	public static final int MATRIX4F_INIT_WITH_TRANSLATION=0;
 	public static final int MATRIX4F_INIT_WITH_ROTATION=1;
 	public static final int MATRIX4F_INIT_WITH_SCALE=2;
-	public static final float RADIAN_CONVERSION_FACTOR=0.0f;
+	public static final float RADIAN_CONVERSION_FACTOR=0.0174532925f;
 	
 	private static float[] projectionMatrix=new float[16];
 	private static float[] viewMatrix=new float[16];
@@ -95,9 +95,17 @@ public class Transform
 	{
 		this.translation=tr;
 	}
+	public void setTranslation(float x,float y,float z)
+	{
+		translation.set(x, y, z);
+	}
 	public void setScale(Vector3f scaler)
 	{
 		this.scale=scaler;
+	}
+	public void setScale(float x,float y,float z)
+	{
+		scale.set(x, y, z);
 	}
 	public static void setProjection(float[] proj)
 	{
@@ -106,6 +114,18 @@ public class Transform
 	public Vector3f getScale()
 	{
 		return this.scale;
+	}
+	public Vector3f getRotation()
+	{
+		return rotation;
+	}
+	public void setRotation(Vector3f rot)
+	{
+		this.rotation=rot;
+	}
+	public void setRotation(float x,float y,float z)
+	{
+		this.rotation.set(x, y, z);
 	}
 	public static Camera getCamera()
 	{
