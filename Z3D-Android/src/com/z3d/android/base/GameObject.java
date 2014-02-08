@@ -6,28 +6,27 @@ public class GameObject
 {
 	private int mProgram;
 	private Mesh mesh;
-	private Shader shader;
 	private Transform transform;
 	private Particle particle;
+	private Material material;
 	public GameObject(int program)
 	{
 		this.mProgram=program;
 	}
-	public GameObject(int p,Mesh m,Shader s,Transform t)
+	public GameObject(int p,Mesh mesh,Material material,Transform transform)
 	{
 		this.mProgram=p;
-		this.mesh=m;
-		this.shader=s;
-		this.transform=t;
+		this.mesh=mesh;
+		this.material=material;
+		this.transform=transform;
 	}
 	public void draw()
 	{
 		try 
 		{
-			shader.bind();
-			shader.setUniform("transform",transform.getTransform());
-			shader.setUniform("MVPMatrix",Transform.getMVPMatrix());
-			mesh.draw(mProgram, shader);
+			material.setUniform("transform",transform.getTransform());
+			material.setUniform("MVPMatrix",Transform.getMVPMatrix());
+			mesh.draw(mProgram,material.getShader());
 		} 
 		catch (Exception e) 
 		{
@@ -55,14 +54,6 @@ public class GameObject
 	{
 		this.mesh=m;
 	}
-	public Shader getShader()
-	{
-		return shader;
-	}
-	public void setShader(Shader s)
-	{
-		this.shader=s;
-	}
 	public Transform getTransform()
 	{
 		return transform;
@@ -79,5 +70,13 @@ public class GameObject
 	{
 		this.particle=p;
 	}	
+	public Material getMaterial()
+	{
+		return material;
+	}
+	public void setMaterial(Material material)
+	{
+		this.material=material;
+	}
 	
 }
